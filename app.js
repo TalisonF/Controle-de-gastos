@@ -302,18 +302,18 @@ function listardespesas() {
     options: {
             maintainAspectRatio: false,
             title: {
-            display : true,
-            fontSize: 20,
-            text : 'Gastos por Categorias',
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
+                display : true,
+                fontSize: 20,
+                text : 'Gastos por Categorias',
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                    }]
                 }
-                }]
             }
-        }
     });
 
     
