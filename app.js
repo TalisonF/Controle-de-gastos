@@ -224,12 +224,9 @@ function listardespesas() {
     despesas = Array()
     despesas = bd.recuperarTodosRegistros()
     console.log(despesas)
+    let valores = {'alimentação' : 0 , 'Educação' : 0 , 'Lazer' : 0 , 'Saúde' : 0  , 'Transporte' : 0 }
 
-    let v1 = 0;
-    let v2 = 0;
-    let v3 = 0;
-    let v4 = 0;
-    let v5 = 0;
+    console.log(valores);
 
     despesas.forEach(d => {
         d.valor.replace(',', '.')
@@ -237,19 +234,19 @@ function listardespesas() {
         d.tipo = parseInt(d.tipo)
         switch (d.tipo) {
             case 1:
-                v1 += d.valor
+                valores['alimentação'] += d.valor;
                 break
             case 2:
-                v2 += d.valor
+                valores['Educação'] += d.valor;
                 break
             case 3:
-                v3 += d.valor
+                valores['Lazer'] += d.valor;
                 break
             case 4:
-                v4 += d.valor
+                valores['Saúde'] += d.valor;
                 break
             case 5:
-                v5 += d.valor
+                valores['Transporte'] += d.valor;
                 break
         }
     });
@@ -258,20 +255,66 @@ function listardespesas() {
 
     let linha = tabela.insertRow()
     linha.insertCell(0).innerHTML = 'Alimentação'
-    linha.insertCell(1).innerHTML = `R$ ${v1}`
+    linha.insertCell(1).innerHTML = `R$ ${valores['alimentação']}`
     linha = tabela.insertRow()
     linha.insertCell(0).innerHTML = 'Educação'
-    linha.insertCell(1).innerHTML = `R$ ${v2}`
+    linha.insertCell(1).innerHTML = `R$ ${valores['Educação']}`
         linha = tabela.insertRow()
     linha.insertCell(0).innerHTML ='Lazer'
-    linha.insertCell(1).innerHTML = `R$ ${v3}`
+    linha.insertCell(1).innerHTML = `R$ ${valores['Lazer'] }`
     
     linha = tabela.insertRow()
     linha.insertCell(0).innerHTML ='Saúde'
-    linha.insertCell(1).innerHTML = `R$ ${v4}`
+    linha.insertCell(1).innerHTML = `R$ ${valores['Saúde']}`
     
     linha = tabela.insertRow()
     linha.insertCell(0).innerHTML ='Transporte'
-    linha.insertCell(1).innerHTML = `R$ ${v5}`
+    linha.insertCell(1).innerHTML = `R$ ${valores['Transporte']}`
+
+    var ctx = document.getElementById("myChart").getContext('2d');
+    
+    var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+        labels: ['alimentação' , 'Educação' , 'Lazer' , 'Saúde'  , 'Transporte'],
+        datasets: [{
+            label: 'R$',
+            data: [valores['alimentação'], valores['Educação'], valores['Lazer'], valores['Saúde'], valores['Transporte']],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+            maintainAspectRatio: false,
+            title: {
+            display : true,
+            fontSize: 20,
+            text : 'Gastos por Categorias',
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+                }]
+            }
+        }
+    });
+
     
 }
